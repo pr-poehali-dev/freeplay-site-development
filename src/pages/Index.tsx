@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -14,6 +15,7 @@ interface Game {
   genre: string[];
   rating: number;
   players: string;
+  description: string;
 }
 
 interface Friend {
@@ -28,18 +30,20 @@ const games: Game[] = [
   {
     id: 1,
     title: 'Dragon Quest Legends',
-    image: 'https://cdn.poehali.dev/projects/f2c5e1ff-8811-4af2-920c-a405ea2be983/files/c3575195-1ee8-4ac7-abd5-a1393aa7c87b.jpg',
+    image: 'https://cdn.poehali.dev/projects/f2c5e1ff-8811-4af2-920c-a405ea2be983/files/16cc42a4-51c3-4f82-a1b4-3db2b514705b.jpg',
     genre: ['RPG', 'Fantasy', 'Adventure'],
     rating: 4.8,
-    players: '2.5M'
+    players: '2.5M',
+    description: 'Эпическое фэнтезийное приключение в мире драконов и магии'
   },
   {
     id: 2,
     title: 'Neon Velocity',
-    image: 'https://cdn.poehali.dev/projects/f2c5e1ff-8811-4af2-920c-a405ea2be983/files/1684be4f-57a1-4e3f-b2fc-10a6415ac633.jpg',
+    image: 'https://cdn.poehali.dev/projects/f2c5e1ff-8811-4af2-920c-a405ea2be983/files/a31a91f0-a46a-4860-8a22-dd51599bd498.jpg',
     genre: ['Racing', 'Cyberpunk', 'Action'],
     rating: 4.6,
-    players: '1.8M'
+    players: '1.8M',
+    description: 'Футуристические гонки в неоновом киберпанк-городе'
   },
   {
     id: 3,
@@ -47,7 +51,35 @@ const games: Game[] = [
     image: 'https://cdn.poehali.dev/projects/f2c5e1ff-8811-4af2-920c-a405ea2be983/files/2d727aff-6c61-4c66-9f3f-42c6b419e7bc.jpg',
     genre: ['Sci-Fi', 'Exploration', 'Survival'],
     rating: 4.9,
-    players: '3.2M'
+    players: '3.2M',
+    description: 'Исследуйте далекие планеты и выживайте в космосе'
+  },
+  {
+    id: 4,
+    title: 'Shadow Strike',
+    image: 'https://cdn.poehali.dev/projects/f2c5e1ff-8811-4af2-920c-a405ea2be983/files/c3575195-1ee8-4ac7-abd5-a1393aa7c87b.jpg',
+    genre: ['Action', 'Shooter', 'Tactical'],
+    rating: 4.7,
+    players: '4.1M',
+    description: 'Тактический шутер с командной игрой'
+  },
+  {
+    id: 5,
+    title: 'Mystic Realms',
+    image: 'https://cdn.poehali.dev/projects/f2c5e1ff-8811-4af2-920c-a405ea2be983/files/1684be4f-57a1-4e3f-b2fc-10a6415ac633.jpg',
+    genre: ['RPG', 'Fantasy', 'MMORPG'],
+    rating: 4.5,
+    players: '5.3M',
+    description: 'Массовая многопользовательская ролевая игра'
+  },
+  {
+    id: 6,
+    title: 'Battle Royale Extreme',
+    image: 'https://cdn.poehali.dev/projects/f2c5e1ff-8811-4af2-920c-a405ea2be983/files/c3575195-1ee8-4ac7-abd5-a1393aa7c87b.jpg',
+    genre: ['Action', 'Battle Royale', 'Survival'],
+    rating: 4.4,
+    players: '8.7M',
+    description: '100 игроков, один победитель'
   }
 ];
 
@@ -60,6 +92,7 @@ const friends: Friend[] = [
 ];
 
 export default function Index() {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState<string>('all');
   const [chatOpen, setChatOpen] = useState(false);
@@ -79,25 +112,33 @@ export default function Index() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
-              <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-                freePlay
-              </h1>
+              <Link to="/">
+                <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent cursor-pointer hover:opacity-80 transition-opacity">
+                  freePlay
+                </h1>
+              </Link>
               <nav className="hidden md:flex items-center gap-6">
-                <Button variant="ghost" className="text-foreground hover:text-primary">
-                  <Icon name="Home" size={18} className="mr-2" />
-                  Главная
-                </Button>
-                <Button variant="ghost" className="text-foreground hover:text-primary">
-                  <Icon name="Library" size={18} className="mr-2" />
-                  Библиотека
-                </Button>
+                <Link to="/">
+                  <Button variant="ghost" className="text-foreground hover:text-primary">
+                    <Icon name="Home" size={18} className="mr-2" />
+                    Главная
+                  </Button>
+                </Link>
+                <Link to="/library">
+                  <Button variant="ghost" className="text-foreground hover:text-primary">
+                    <Icon name="Library" size={18} className="mr-2" />
+                    Библиотека
+                  </Button>
+                </Link>
+                <Link to="/store">
+                  <Button variant="ghost" className="text-foreground hover:text-primary">
+                    <Icon name="ShoppingBag" size={18} className="mr-2" />
+                    Магазин
+                  </Button>
+                </Link>
                 <Button variant="ghost" className="text-foreground hover:text-primary">
                   <Icon name="Trophy" size={18} className="mr-2" />
                   Достижения
-                </Button>
-                <Button variant="ghost" className="text-foreground hover:text-primary">
-                  <Icon name="ShoppingBag" size={18} className="mr-2" />
-                  Магазин
                 </Button>
               </nav>
             </div>
@@ -126,42 +167,56 @@ export default function Index() {
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3 space-y-6">
-            <section className="relative h-[400px] rounded-xl overflow-hidden animate-fade-in">
+            <section className="relative h-[500px] rounded-xl overflow-hidden animate-fade-in group cursor-pointer">
               <img
                 src={games[0].image}
                 alt="Hero"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-8">
-                <Badge className="mb-3 bg-secondary text-secondary-foreground">Топ недели</Badge>
-                <h2 className="text-5xl font-heading font-bold mb-3">{games[0].title}</h2>
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="flex items-center gap-1">
-                    <Icon name="Star" size={20} className="fill-yellow-400 text-yellow-400" />
-                    <span className="font-semibold">{games[0].rating}</span>
+              <div className="absolute bottom-0 left-0 p-8 w-full">
+                <div className="flex items-start justify-between">
+                  <div className="max-w-2xl">
+                    <Badge className="mb-3 bg-secondary text-secondary-foreground">🏆 Топ недели</Badge>
+                    <h2 className="text-5xl font-heading font-bold mb-3">{games[0].title}</h2>
+                    <p className="text-lg text-muted-foreground mb-4">{games[0].description}</p>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="flex items-center gap-1">
+                        <Icon name="Star" size={20} className="fill-yellow-400 text-yellow-400" />
+                        <span className="font-semibold text-lg">{games[0].rating}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Icon name="Users" size={20} />
+                        <span className="text-lg">{games[0].players} игроков</span>
+                      </div>
+                      <div className="flex gap-2">
+                        {games[0].genre.map((g) => (
+                          <Badge key={g} variant="outline">{g}</Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <Button size="lg" className="bg-primary hover:bg-primary/90">
+                        <Icon name="Play" size={20} className="mr-2" />
+                        Играть бесплатно
+                      </Button>
+                      <Button size="lg" variant="outline">
+                        <Icon name="Plus" size={20} className="mr-2" />
+                        В библиотеку
+                      </Button>
+                      <Button size="lg" variant="outline" onClick={() => navigate(`/game/${games[0].id}`)}>
+                        <Icon name="Info" size={20} className="mr-2" />
+                        Подробнее
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Icon name="Users" size={20} />
-                    <span>{games[0].players} игроков</span>
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90">
-                    <Icon name="Play" size={20} className="mr-2" />
-                    Играть бесплатно
-                  </Button>
-                  <Button size="lg" variant="outline">
-                    <Icon name="Plus" size={20} className="mr-2" />
-                    В библиотеку
-                  </Button>
                 </div>
               </div>
             </section>
 
             <Tabs defaultValue="all" onValueChange={setSelectedGenre}>
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-2xl font-heading font-bold">Каталог игр</h3>
+                <h3 className="text-2xl font-heading font-bold">Популярные игры</h3>
                 <TabsList>
                   <TabsTrigger value="all">Все</TabsTrigger>
                   <TabsTrigger value="RPG">RPG</TabsTrigger>
@@ -173,7 +228,7 @@ export default function Index() {
               <TabsContent value={selectedGenre} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {filteredGames.map((game) => (
-                    <Card key={game.id} className="overflow-hidden game-card-hover cursor-pointer group">
+                    <Card key={game.id} className="overflow-hidden game-card-hover cursor-pointer group" onClick={() => navigate(`/game/${game.id}`)}>
                       <div className="relative h-48 overflow-hidden">
                         <img
                           src={game.image}
@@ -181,7 +236,9 @@ export default function Index() {
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                          <Button className="w-full bg-primary">
+                          <Button className="w-full bg-primary" onClick={(e) => {
+                            e.stopPropagation();
+                          }}>
                             <Icon name="Play" size={18} className="mr-2" />
                             Играть сейчас
                           </Button>
@@ -212,6 +269,27 @@ export default function Index() {
                 </div>
               </TabsContent>
             </Tabs>
+
+            <section className="mt-8">
+              <h3 className="text-2xl font-heading font-bold mb-4">Новые релизы</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {games.slice(3, 5).map((game) => (
+                  <Card key={game.id} className="overflow-hidden cursor-pointer hover:border-primary transition-colors" onClick={() => navigate(`/game/${game.id}`)}>
+                    <div className="flex">
+                      <img src={game.image} alt={game.title} className="w-40 h-32 object-cover" />
+                      <CardContent className="p-4 flex-1">
+                        <h4 className="font-heading font-semibold mb-2">{game.title}</h4>
+                        <p className="text-sm text-muted-foreground mb-2">{game.description}</p>
+                        <div className="flex items-center gap-2">
+                          <Icon name="Star" size={14} className="fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm">{game.rating}</span>
+                        </div>
+                      </CardContent>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </section>
           </div>
 
           <aside className="space-y-6">
